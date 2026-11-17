@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:fl_chart/fl_chart.dart';
+
 import '../../core/constants/app_colors.dart';
-import '../../core/utils/date_formatter.dart';
 import '../../core/utils/risk_level_helper.dart';
 import '../../models/flood_risk_model.dart';
 import '../../providers/app_state_provider.dart';
@@ -77,11 +77,6 @@ class FloodRiskScreen extends StatelessWidget {
 
                   // 4. ML Prediction Uncertainty & Confidence Intervals Card
                   _buildPredictionUncertaintyCard(risk),
-
-                  const SizedBox(height: 16),
-
-                  // 5. Data Freshness & Backend Integration Disclaimer
-                  _buildFreshnessAndIntegrationFooter(risk),
                 ],
               ),
             ),
@@ -207,8 +202,7 @@ class FloodRiskScreen extends StatelessWidget {
                 const SizedBox(width: 8),
                 Expanded(
                   child: Text(
-                    risk?.riskExplanation ??
-                        'Hydrological conditions indicate elevated runoff into the main river channel.',
+                    risk?.riskExplanation ?? 'Hydrological conditions indicate elevated runoff into the main river channel.',
                     style: TextStyle(
                       fontSize: 12,
                       color: level.color,
@@ -228,8 +222,10 @@ class FloodRiskScreen extends StatelessWidget {
     // Percentage towards danger mark
     final double range = gauge.dangerLevelMeters - gauge.warningLevelMeters;
     final double progress = range > 0
-        ? ((gauge.currentLevelMeters - gauge.warningLevelMeters) / range)
-            .clamp(0.0, 1.2)
+        ? ((gauge.currentLevelMeters - gauge.warningLevelMeters) / range).clamp(
+            0.0,
+            1.2,
+          )
         : 0.5;
 
     return CustomCard(
@@ -241,8 +237,11 @@ class FloodRiskScreen extends StatelessWidget {
             children: [
               Row(
                 children: [
-                  const Icon(Icons.waves_rounded,
-                      color: AppColors.primary, size: 20),
+                  const Icon(
+                    Icons.waves_rounded,
+                    color: AppColors.primary,
+                    size: 20,
+                  ),
                   const SizedBox(width: 8),
                   Text(
                     gauge.riverName.toUpperCase(),
@@ -305,7 +304,10 @@ class FloodRiskScreen extends StatelessWidget {
                 children: [
                   const Text(
                     'Hydrological Gauge Reading',
-                    style: TextStyle(fontSize: 11.5, fontWeight: FontWeight.w600),
+                    style: TextStyle(
+                      fontSize: 11.5,
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   Text(
                     '${gauge.currentLevelMeters.toStringAsFixed(2)} m',
@@ -328,8 +330,8 @@ class FloodRiskScreen extends StatelessWidget {
                     gauge.isAboveDangerLevel
                         ? AppColors.riskSevere
                         : gauge.isAboveWarningLevel
-                            ? AppColors.riskHigh
-                            : AppColors.riskModerate,
+                        ? AppColors.riskHigh
+                        : AppColors.riskModerate,
                   ),
                 ),
               ),
@@ -355,10 +357,7 @@ class FloodRiskScreen extends StatelessWidget {
                   ),
                   Text(
                     'HFL: ${gauge.highestFloodLevelMeters.toStringAsFixed(2)}m',
-                    style: TextStyle(
-                      fontSize: 11,
-                      color: AppColors.textMuted,
-                    ),
+                    style: TextStyle(fontSize: 11, color: AppColors.textMuted),
                   ),
                 ],
               ),
@@ -390,7 +389,8 @@ class FloodRiskScreen extends StatelessWidget {
                 child: _buildParameterBox(
                   icon: Icons.water_drop_rounded,
                   label: '24h Observed Rain',
-                  value: '${risk?.rainfall24hMm.toStringAsFixed(1) ?? '112.4'} mm',
+                  value:
+                      '${risk?.rainfall24hMm.toStringAsFixed(1) ?? '112.4'} mm',
                   subtitle: 'Heavy downpour',
                   color: AppColors.secondary,
                 ),
@@ -400,7 +400,8 @@ class FloodRiskScreen extends StatelessWidget {
                 child: _buildParameterBox(
                   icon: Icons.cloud_sync_rounded,
                   label: '48h Forecast Rain',
-                  value: '${risk?.rainfall48hPredictedMm.toStringAsFixed(1) ?? '145.0'} mm',
+                  value:
+                      '${risk?.rainfall48hPredictedMm.toStringAsFixed(1) ?? '145.0'} mm',
                   subtitle: 'IMD Ensemble',
                   color: Colors.indigo,
                 ),
@@ -414,7 +415,8 @@ class FloodRiskScreen extends StatelessWidget {
                 child: _buildParameterBox(
                   icon: Icons.grass_rounded,
                   label: 'Soil Saturation',
-                  value: '${risk?.soilSaturationPercent.toStringAsFixed(1) ?? '91.5'}%',
+                  value:
+                      '${risk?.soilSaturationPercent.toStringAsFixed(1) ?? '91.5'}%',
                   subtitle: 'Low absorption capacity',
                   color: Colors.brown,
                 ),
@@ -474,10 +476,7 @@ class FloodRiskScreen extends StatelessWidget {
           ),
           Text(
             subtitle,
-            style: TextStyle(
-              fontSize: 10,
-              color: AppColors.textMuted,
-            ),
+            style: TextStyle(fontSize: 10, color: AppColors.textMuted),
           ),
         ],
       ),
@@ -485,7 +484,8 @@ class FloodRiskScreen extends StatelessWidget {
   }
 
   Widget _buildPredictionUncertaintyCard(FloodRiskModel? risk) {
-    final uncertainty = risk?.uncertainty ?? PredictionUncertainty.defaultModel();
+    final uncertainty =
+        risk?.uncertainty ?? PredictionUncertainty.defaultModel();
     final confidencePercent = (uncertainty.confidenceScore * 100).toInt();
 
     return CustomCard(
@@ -556,15 +556,30 @@ class FloodRiskScreen extends StatelessWidget {
                       getTitlesWidget: (val, _) {
                         switch (val.toInt()) {
                           case 0:
-                            return const Text('6h', style: TextStyle(fontSize: 10));
+                            return const Text(
+                              '6h',
+                              style: TextStyle(fontSize: 10),
+                            );
                           case 1:
-                            return const Text('12h', style: TextStyle(fontSize: 10));
+                            return const Text(
+                              '12h',
+                              style: TextStyle(fontSize: 10),
+                            );
                           case 2:
-                            return const Text('24h', style: TextStyle(fontSize: 10));
+                            return const Text(
+                              '24h',
+                              style: TextStyle(fontSize: 10),
+                            );
                           case 3:
-                            return const Text('36h', style: TextStyle(fontSize: 10));
+                            return const Text(
+                              '36h',
+                              style: TextStyle(fontSize: 10),
+                            );
                           case 4:
-                            return const Text('48h', style: TextStyle(fontSize: 10));
+                            return const Text(
+                              '48h',
+                              style: TextStyle(fontSize: 10),
+                            );
                           default:
                             return const SizedBox.shrink();
                         }
@@ -577,23 +592,27 @@ class FloodRiskScreen extends StatelessWidget {
                       reservedSize: 28,
                       getTitlesWidget: (val, _) {
                         if (val % 20 == 0) {
-                          return Text('${val.toInt()}',
-                              style: const TextStyle(fontSize: 9));
+                          return Text(
+                            '${val.toInt()}',
+                            style: const TextStyle(fontSize: 9),
+                          );
                         }
                         return const SizedBox.shrink();
                       },
                     ),
                   ),
-                  topTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
-                  rightTitles: const AxisTitles(sideTitles: SideTitles(showTitles: false)),
+                  topTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
+                  rightTitles: const AxisTitles(
+                    sideTitles: SideTitles(showTitles: false),
+                  ),
                 ),
                 gridData: FlGridData(
                   show: true,
                   horizontalInterval: 20,
-                  getDrawingHorizontalLine: (_) => const FlLine(
-                    color: Color(0xFFE2E8F0),
-                    strokeWidth: 1,
-                  ),
+                  getDrawingHorizontalLine: (_) =>
+                      const FlLine(color: Color(0xFFE2E8F0), strokeWidth: 1),
                 ),
                 borderData: FlBorderData(show: false),
                 lineBarsData: [
@@ -648,7 +667,10 @@ class FloodRiskScreen extends StatelessWidget {
             children: [
               _buildLegendDot(AppColors.primary, 'Expected Risk'),
               const SizedBox(width: 12),
-              _buildLegendDot(AppColors.riskSevere.withAlpha(150), 'Upper Margin'),
+              _buildLegendDot(
+                AppColors.riskSevere.withAlpha(150),
+                'Upper Margin',
+              ),
               const SizedBox(width: 12),
               _buildLegendDot(AppColors.riskLow.withAlpha(150), 'Lower Margin'),
             ],
@@ -675,49 +697,4 @@ class FloodRiskScreen extends StatelessWidget {
       ],
     );
   }
-
-  Widget _buildFreshnessAndIntegrationFooter(FloodRiskModel? risk) {
-    return CustomCard(
-      padding: const EdgeInsets.all(14),
-      color: const Color(0xFFF1F5F9),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          Row(
-            children: const [
-              Icon(Icons.hub_outlined, size: 18, color: AppColors.primary),
-              SizedBox(width: 8),
-              Text(
-                'FastAPI & AIML Backend Integration Protocol',
-                style: TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w800,
-                  color: AppColors.primaryDark,
-                ),
-              ),
-            ],
-          ),
-          const SizedBox(height: 6),
-          const Text(
-            'This frontend receives telemetry via the configured ApiService (/api/v1/flood-risk/{id}). In production, real-time CWC sensor streams and Python LSTM outputs replace this simulated data directly.',
-            style: TextStyle(
-              fontSize: 11,
-              color: AppColors.textSecondary,
-              height: 1.35,
-            ),
-          ),
-          const SizedBox(height: 8),
-          Text(
-            'Telemetry Freshness: ${risk != null ? DateFormatter.formatTimestamp(risk.lastUpdated) : 'Recently verified'}',
-            style: TextStyle(
-              fontSize: 10.5,
-              fontWeight: FontWeight.w600,
-              color: AppColors.textMuted,
-            ),
-          ),
-        ],
-      ),
-    );
-  }
 }
-

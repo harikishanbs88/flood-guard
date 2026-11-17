@@ -2,6 +2,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import '../../core/constants/app_colors.dart';
 import '../../core/constants/app_constants.dart';
+import '../../widgets/jal_kavach_logo.dart';
 import '../main_navigation_shell.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -128,20 +129,13 @@ class _SplashScreenState extends State<SplashScreen>
                               ),
                             ),
 
-                            // Main Icon Circle
+                            // JalKavach logo
                             Container(
                               width: 104,
                               height: 104,
                               decoration: BoxDecoration(
                                 shape: BoxShape.circle,
-                                gradient: const LinearGradient(
-                                  begin: Alignment.topLeft,
-                                  end: Alignment.bottomRight,
-                                  colors: [
-                                    Color(0xFF42A5F5),
-                                    Color(0xFF1565C0),
-                                  ],
-                                ),
+                                color: Colors.white,
                                 boxShadow: [
                                   BoxShadow(
                                     color: Colors.blue.withAlpha(120),
@@ -151,22 +145,8 @@ class _SplashScreenState extends State<SplashScreen>
                                   ),
                                 ],
                               ),
-                              child: const Center(
-                                child: Icon(
-                                  Icons.shield_rounded,
-                                  size: 58,
-                                  color: Colors.white,
-                                ),
-                              ),
-                            ),
-
-                            // Inner Water Wave Icon Overlay
-                            const Positioned(
-                              bottom: 30,
-                              child: Icon(
-                                Icons.water_drop_rounded,
-                                size: 26,
-                                color: Color(0xFFE1F5FE),
+                              child: Center(
+                                child: JalKavachLogo(size: 72),
                               ),
                             ),
                           ],
@@ -215,7 +195,7 @@ class _SplashScreenState extends State<SplashScreen>
                         const Padding(
                           padding: EdgeInsets.symmetric(horizontal: 40),
                           child: Text(
-                            'Real-time hydrological forecasting, CWC telemetry & NDMA emergency alerts.',
+                            'A strong Indian identity.',
                             textAlign: TextAlign.center,
                             style: TextStyle(
                               fontSize: 13,

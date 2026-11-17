@@ -1,7 +1,7 @@
 class AppConstants {
-  static const String appName = 'JalRakshak';
-  static const String appFullName = 'JalRakshak - Flood Preparedness & Emergency Alerts';
-  static const String appTagline = 'Real-time Flood Risk Prediction & Disaster Preparedness for India';
+  static const String appName = 'JalKavach';
+  static const String appFullName = 'JalKavach - Flood Preparedness & Emergency Alerts';
+  static const String appTagline = 'A strong Indian identity.';
   static const String appVersion = '1.0.0';
 
   // API Backend default configuration (FastAPI)

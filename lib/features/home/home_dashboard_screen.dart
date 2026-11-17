@@ -9,6 +9,7 @@ import '../../providers/weather_provider.dart';
 import '../../providers/flood_risk_provider.dart';
 import '../../providers/alerts_provider.dart';
 import '../../widgets/custom_card.dart';
+import '../../widgets/jal_kavach_logo.dart';
 import '../../widgets/risk_badge.dart';
 import '../../widgets/status_banner.dart';
 
@@ -113,16 +114,12 @@ class _HomeDashboardScreenState extends State<HomeDashboardScreen> {
       title: Row(
         children: [
           Container(
-            padding: const EdgeInsets.all(7),
+            padding: const EdgeInsets.all(6),
             decoration: BoxDecoration(
-              color: AppColors.primary.withAlpha(20),
+              color: AppColors.primary.withAlpha(12),
               borderRadius: BorderRadius.circular(10),
             ),
-            child: const Icon(
-              Icons.shield_rounded,
-              color: AppColors.primary,
-              size: 22,
-            ),
+            child: const JalKavachLogo(size: 24),
           ),
           const SizedBox(width: 10),
           Column(
